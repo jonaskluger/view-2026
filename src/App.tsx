@@ -3,24 +3,39 @@ import { Header } from './components/Header';
 import { DayTabs } from './components/DayTabs';
 import { FilterBar } from './components/FilterBar';
 import { SessionCard } from './components/SessionCard';
+import { ReloadPrompt } from './components/ReloadPrompt';
 import { useProgram } from './lib/useProgram';
+import { useFavorites } from './lib/useFavorites';
 import { getRomeNow, isOngoing } from './lib/datetime';
 import type { Session } from './types';
 
-function groupByStart(sessions: Session[]): [string, Session[]][] {
+function groupSessions(sessions: Session[], byDay: boolean): [string, Session[]][] {
   const groups = new Map<string, Session[]>();
   for (const session of sessions) {
-    const list = groups.get(session.start);
+    const key = byDay ? `${session.date} ${session.start}` : session.start;
+    const list = groups.get(key);
     if (list) list.push(session);
-    else groups.set(session.start, [session]);
+    else groups.set(key, [session]);
   }
   return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b));
 }
 
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function groupLabel(key: string, byDay: boolean): string {
+  if (!byDay) return key;
+  const [date, start] = key.split(' ');
+  const [y, m, d] = date.split('-').map(Number);
+  const weekday = WEEKDAYS[new Date(y, m - 1, d).getDay()];
+  return `${weekday} ${d} · ${start}`;
+}
+
 export default function App() {
   const { program, source, loading, error, refresh } = useProgram();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [now, setNow] = useState(getRomeNow);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [showFavorites, setShowFavorites] = useState(false);
   const [query, setQuery] = useState('');
   const [activeType, setActiveType] = useState<string | null>(null);
 
@@ -37,10 +52,11 @@ export default function App() {
     setSelectedDay((today ?? program.days[0])?.id ?? null);
   }, [program, selectedDay, now.date]);
 
-  const daySessions = useMemo(
-    () => program?.sessions.filter((s) => s.day === selectedDay) ?? [],
-    [program, selectedDay],
-  );
+  const daySessions = useMemo(() => {
+    if (!program) return [];
+    if (showFavorites) return program.sessions.filter((s) => favorites.has(s.id));
+    return program.sessions.filter((s) => s.day === selectedDay);
+  }, [program, selectedDay, showFavorites, favorites]);
 
   const types = useMemo(() => {
     const counts = new Map<string, number>();
@@ -67,7 +83,7 @@ export default function App() {
     });
   }, [daySessions, query, activeType]);
 
-  const groups = useMemo(() => groupByStart(visible), [visible]);
+  const groups = useMemo(() => groupSessions(visible, showFavorites), [visible, showFavorites]);
 
   return (
     <div className="min-h-dvh pb-10">
@@ -79,7 +95,18 @@ export default function App() {
       />
 
       {program && program.days.length > 0 && selectedDay && (
-        <DayTabs days={program.days} selected={selectedDay} today={now.date} onSelect={setSelectedDay} />
+        <DayTabs
+          days={program.days}
+          selected={showFavorites ? '' : selectedDay}
+          today={now.date}
+          onSelect={(dayId) => {
+            setShowFavorites(false);
+            setSelectedDay(dayId);
+          }}
+          favoritesCount={favorites.size}
+          favoritesActive={showFavorites}
+          onShowFavorites={() => setShowFavorites((v) => !v)}
+        />
       )}
 
       {program && (
@@ -112,14 +139,16 @@ export default function App() {
 
         {program && groups.length === 0 && (
           <p className="mt-10 text-center text-sm text-zinc-500">
-            No sessions match your filters for this day.
+            {showFavorites && !query && !activeType
+              ? 'No favorites yet — tap the ★ on a session to save it here.'
+              : 'No sessions match your filters for this day.'}
           </p>
         )}
 
-        {groups.map(([start, sessions]) => (
-          <section key={start} className="mt-6">
+        {groups.map(([key, sessions]) => (
+          <section key={key} className="mt-6">
             <h2 className="sticky top-[68px] z-10 -mx-4 bg-zinc-950/95 px-4 py-1.5 text-sm font-bold tabular-nums text-zinc-300 backdrop-blur">
-              {start}
+              {groupLabel(key, showFavorites)}
             </h2>
             <div className="mt-2 space-y-2.5">
               {sessions.map((session) => (
@@ -127,6 +156,8 @@ export default function App() {
                   key={session.id}
                   session={session}
                   live={isOngoing(session.start, session.end, now.hm, session.date, now.date)}
+                  favorite={isFavorite(session.id)}
+                  onToggleFavorite={() => toggleFavorite(session.id)}
                 />
               ))}
             </div>
@@ -153,6 +184,8 @@ export default function App() {
           Cinema Massimo, Via Giuseppe Verdi 18
         </p>
       </footer>
+
+      <ReloadPrompt />
     </div>
   );
 }

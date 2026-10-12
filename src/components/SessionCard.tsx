@@ -1,13 +1,16 @@
 import type { Session } from '../types';
 import { formatTimeRange } from '../lib/datetime';
 import { typeBadgeClass } from '../lib/typeStyles';
+import { StarButton } from './StarButton';
 
 interface SessionCardProps {
   session: Session;
   live: boolean;
+  favorite: boolean;
+  onToggleFavorite: () => void;
 }
 
-export function SessionCard({ session, live }: SessionCardProps) {
+export function SessionCard({ session, live, favorite, onToggleFavorite }: SessionCardProps) {
   const Wrapper = session.url ? 'a' : 'div';
   const wrapperProps = session.url
     ? { href: session.url, target: '_blank', rel: 'noopener noreferrer' }
@@ -42,6 +45,7 @@ export function SessionCard({ session, live }: SessionCardProps) {
           {session.room}
           {session.attendance === 'Remote' ? ' · Remote' : ''}
         </span>
+        <StarButton active={favorite} onToggle={onToggleFavorite} />
       </div>
 
       <h3 className="mt-2 text-[15px] font-semibold leading-snug text-zinc-100">

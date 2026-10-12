@@ -6,9 +6,12 @@ interface DayTabsProps {
   selected: string;
   today: string;
   onSelect: (dayId: string) => void;
+  favoritesCount: number;
+  favoritesActive: boolean;
+  onShowFavorites: () => void;
 }
 
-export function DayTabs({ days, selected, today, onSelect }: DayTabsProps) {
+export function DayTabs({ days, selected, today, onSelect, favoritesCount, favoritesActive, onShowFavorites }: DayTabsProps) {
   const activeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -17,10 +20,26 @@ export function DayTabs({ days, selected, today, onSelect }: DayTabsProps) {
 
   return (
     <nav
-      className="scrollbar-none sticky top-0 z-20 flex gap-1.5 overflow-x-auto border-b border-zinc-800 bg-zinc-950/95 px-3 py-2 backdrop-blur"
+      className="sticky top-0 z-20 flex gap-1.5 border-b border-zinc-800 bg-zinc-950/95 px-3 py-2 backdrop-blur"
       aria-label="Conference days"
     >
-      {days.map((day) => {
+      <button
+        onClick={onShowFavorites}
+        className={`flex shrink-0 min-w-[4.5rem] flex-col items-center justify-center rounded-xl px-3 py-1.5 text-sm transition active:scale-95 ${
+          favoritesActive
+            ? 'bg-amber-400 font-semibold text-zinc-950'
+            : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:bg-zinc-800'
+        }`}
+        aria-pressed={favoritesActive}
+      >
+        <span className="text-[11px] font-medium uppercase tracking-wide opacity-80">Saved</span>
+        <span className="text-base font-bold leading-tight">
+          ★ {favoritesCount > 0 ? favoritesCount : ''}
+        </span>
+      </button>
+      <div className="w-px shrink-0 self-stretch bg-zinc-800" aria-hidden="true" />
+      <div className="scrollbar-none flex flex-1 gap-1.5 overflow-x-auto">
+        {days.map((day) => {
         const isActive = day.id === selected;
         const isToday = day.date === today;
         return (
@@ -46,7 +65,8 @@ export function DayTabs({ days, selected, today, onSelect }: DayTabsProps) {
             )}
           </button>
         );
-      })}
+        })}
+      </div>
     </nav>
   );
 }
