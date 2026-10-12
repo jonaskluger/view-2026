@@ -32,7 +32,7 @@ export function ReloadPrompt() {
       <div className="flex gap-2">
         <button
           onClick={() => window.location.reload()}
-          className="rounded-lg bg-orange-500 px-3 py-1.5 font-semibold text-zinc-950 transition active:scale-95"
+          className="rounded-full bg-view px-4 py-1.5 font-bold text-white transition active:scale-95"
         >
           Update
         </button>

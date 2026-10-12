@@ -25,10 +25,10 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
     >
       <button
         onClick={onShowFavorites}
-        className={`flex shrink-0 min-w-[4.5rem] flex-col items-center justify-center rounded-xl px-3 py-1.5 text-sm transition active:scale-95 ${
+        className={`flex shrink-0 min-w-[4.5rem] flex-col items-center justify-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
           favoritesActive
-            ? 'bg-amber-400 font-semibold text-zinc-950'
-            : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:bg-zinc-800'
+            ? 'bg-view-yellow font-bold text-zinc-950'
+            : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:ring-view/50'
         }`}
         aria-pressed={favoritesActive}
       >
@@ -47,18 +47,18 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
             key={day.id}
             ref={isActive ? activeRef : undefined}
             onClick={() => onSelect(day.id)}
-            className={`relative flex min-w-[4.5rem] flex-col items-center rounded-xl px-3 py-1.5 text-sm transition active:scale-95 ${
+            className={`relative flex min-w-[4.5rem] flex-col items-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
               isActive
-                ? 'bg-orange-500 font-semibold text-zinc-950'
-                : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:bg-zinc-800'
+                ? 'bg-view font-bold text-white shadow-md shadow-view/25'
+                : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:ring-view/50'
             }`}
           >
-            <span className="text-[11px] font-medium uppercase tracking-wide opacity-80">{day.weekday}</span>
-            <span className="text-base font-bold leading-tight">Oct {day.id}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wide opacity-75">{day.weekday}</span>
+            <span className="text-base font-extrabold leading-tight">Oct {day.id}</span>
             {isToday && (
               <span
                 className={`absolute -top-0.5 right-1.5 h-1.5 w-1.5 rounded-full ${
-                  isActive ? 'bg-zinc-950' : 'bg-orange-400'
+                  isActive ? 'bg-white' : 'bg-view'
                 }`}
                 aria-label="Today"
               />

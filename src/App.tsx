@@ -147,7 +147,7 @@ export default function App() {
 
         {groups.map(([key, sessions]) => (
           <section key={key} className="mt-6">
-            <h2 className="sticky top-[68px] z-10 -mx-4 bg-zinc-950/95 px-4 py-1.5 text-sm font-bold tabular-nums text-zinc-300 backdrop-blur">
+            <h2 className="sticky top-[68px] z-10 -mx-4 bg-zinc-950/95 px-4 py-1.5 text-sm font-extrabold tabular-nums text-view backdrop-blur">
               {groupLabel(key, showFavorites)}
             </h2>
             <div className="mt-2 space-y-2.5">

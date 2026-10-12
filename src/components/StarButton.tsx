@@ -16,8 +16,8 @@ export function StarButton({ active, onToggle }: StarButtonProps) {
       aria-pressed={active}
       className={`ml-auto -mr-1 -mt-1 rounded-full p-1.5 transition active:scale-90 ${
         active
-          ? 'text-amber-400 hover:text-amber-300'
-          : 'text-zinc-600 hover:text-zinc-400'
+          ? 'text-view-yellow hover:text-view-yellow/80'
+          : 'text-zinc-600 hover:text-view-yellow/60'
       }`}
     >
       <svg

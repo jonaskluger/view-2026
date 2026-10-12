@@ -21,8 +21,8 @@ export function SessionCard({ session, live, favorite, onToggleFavorite }: Sessi
       {...wrapperProps}
       className={`block rounded-2xl bg-zinc-900 p-3.5 ring-1 transition ${
         live
-          ? 'ring-2 ring-orange-500/70'
-          : 'ring-zinc-800 hover:ring-zinc-700'
+          ? 'ring-2 ring-view'
+          : 'ring-zinc-800 hover:ring-view/50'
       } ${session.url ? 'active:scale-[0.99]' : ''}`}
     >
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
@@ -30,10 +30,10 @@ export function SessionCard({ session, live, favorite, onToggleFavorite }: Sessi
           {session.type}
         </span>
         {live && (
-          <span className="flex items-center gap-1.5 rounded-md bg-orange-500/15 px-1.5 py-0.5 text-[11px] font-semibold text-orange-300 ring-1 ring-orange-400/30">
+          <span className="flex items-center gap-1.5 rounded-full bg-view px-2 py-0.5 text-[11px] font-extrabold tracking-wide text-white">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
             </span>
             NOW
           </span>
@@ -50,7 +50,7 @@ export function SessionCard({ session, live, favorite, onToggleFavorite }: Sessi
 
       <h3 className="mt-2 text-[15px] font-semibold leading-snug text-zinc-100">
         {session.title}
-        {session.url && <span className="ml-1 text-zinc-500">↗</span>}
+          {session.url && <span className="ml-1 text-view">↗</span>}
       </h3>
 
       {session.speakers.length > 0 && (

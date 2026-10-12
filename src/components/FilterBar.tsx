@@ -28,16 +28,16 @@ export function FilterBar({ query, onQueryChange, types, activeType, onTypeChang
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder="Search talks, speakers, rooms…"
-            className="w-full rounded-xl bg-zinc-900 py-2.5 pl-9 pr-3 text-sm text-zinc-100 ring-1 ring-zinc-800 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full rounded-full bg-zinc-900 py-2.5 pl-9 pr-3 text-sm font-medium text-zinc-100 ring-1 ring-zinc-800 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-view"
           />
         </div>
         {types.length > 1 && (
           <div className="scrollbar-none -mx-4 mt-2.5 flex gap-1.5 overflow-x-auto px-4 pb-1">
             <button
               onClick={() => onTypeChange(null)}
-              className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition active:scale-95 ${
+              className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold transition active:scale-95 ${
                 activeType === null
-                  ? 'bg-zinc-100 text-zinc-900'
+                  ? 'bg-view text-white shadow-md shadow-view/25'
                   : 'bg-zinc-900 text-zinc-400 ring-1 ring-zinc-800 hover:text-zinc-200'
               }`}
             >
@@ -47,9 +47,9 @@ export function FilterBar({ query, onQueryChange, types, activeType, onTypeChang
               <button
                 key={type}
                 onClick={() => onTypeChange(activeType === type ? null : type)}
-                className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition active:scale-95 ${
+                className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold transition active:scale-95 ${
                   activeType === type
-                    ? 'bg-zinc-100 text-zinc-900'
+                    ? 'bg-view text-white shadow-md shadow-view/25'
                     : 'bg-zinc-900 text-zinc-400 ring-1 ring-zinc-800 hover:text-zinc-200'
                 }`}
               >

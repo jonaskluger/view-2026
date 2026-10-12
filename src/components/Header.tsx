@@ -16,21 +16,18 @@ const SOURCE_LABEL: Record<ProgramSource, { text: string; className: string }> =
 export function Header({ lastUpdated, source, loading, onRefresh }: HeaderProps) {
   const badge = source ? SOURCE_LABEL[source] : null;
   return (
-    <header className="border-b border-zinc-800 bg-zinc-950/90 px-4 pb-4 pt-5 backdrop-blur">
-      <div className="mx-auto flex max-w-3xl items-start justify-between gap-3">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-400">
-            27th International Computer Graphics Conference
-          </p>
-          <h1 className="mt-1 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+    <header className="border-b-2 border-view bg-zinc-950/90 px-4 pb-3 pt-3 backdrop-blur">
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <img src="/view-logo.png" alt="VIEW Conference logo" className="h-8 w-auto" />
+          <h1 className="text-xl font-black leading-tight tracking-tight text-view sm:text-2xl">
             VIEW Conference 2026
           </h1>
-          <p className="mt-1 text-sm text-zinc-400">12–16 October · Torino, Italy</p>
         </div>
         <button
           onClick={onRefresh}
           disabled={loading}
-          className="mt-1 inline-flex shrink-0 items-center gap-2 rounded-full bg-zinc-800 px-3.5 py-2 text-sm font-medium text-zinc-200 ring-1 ring-zinc-700 transition hover:bg-zinc-700 active:scale-95 disabled:opacity-50"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-view px-4 py-2 text-sm font-bold text-white shadow-lg shadow-view/25 transition hover:bg-view-deep active:scale-95 disabled:opacity-50"
           aria-label="Refresh program"
         >
           <svg
