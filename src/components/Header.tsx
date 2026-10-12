@@ -20,7 +20,7 @@ export function Header({ lastUpdated, source, loading, onRefresh }: HeaderProps)
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <img src="/view-logo.png" alt="VIEW Conference logo" className="h-8 w-auto" />
-          <h1 className="text-xl font-black leading-tight tracking-tight text-view sm:text-2xl">
+          <h1 className="text-xl font-semibold leading-tight tracking-tight text-view sm:text-2xl">
             VIEW Conference 2026
           </h1>
         </div>
