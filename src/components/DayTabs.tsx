@@ -47,7 +47,7 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
             key={day.id}
             ref={isActive ? activeRef : undefined}
             onClick={() => onSelect(day.id)}
-            className={`relative flex min-w-[4.5rem] flex-col items-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
+            className={`relative flex aspect-square min-w-[4.5rem] flex-col items-center justify-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
               isActive
                 ? 'bg-view font-bold text-white shadow-md shadow-view/25'
                 : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:ring-view/50'
@@ -55,14 +55,6 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
           >
             <span className="text-[11px] font-bold uppercase tracking-wide opacity-75">{day.weekday}</span>
             <span className="text-base font-extrabold leading-tight">Oct {day.id}</span>
-            {isToday && (
-              <span
-                className={`absolute -top-0.5 right-1.5 h-1.5 w-1.5 rounded-full ${
-                  isActive ? 'bg-white' : 'bg-view'
-                }`}
-                aria-label="Today"
-              />
-            )}
           </button>
         );
         })}
