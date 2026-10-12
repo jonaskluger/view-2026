@@ -45,11 +45,11 @@ export function Header({ lastUpdated, source, loading, onRefresh }: HeaderProps)
           <span className="hidden sm:inline">Refresh</span>
         </button>
       </div>
-      <div className="mx-auto mt-3 flex max-w-3xl flex-wrap items-center gap-2 text-xs text-zinc-500">
+      <div className="mx-auto mt-3 flex max-w-3xl items-center gap-2 text-xs text-zinc-500">
         {badge && (
-          <span className={`rounded-full px-2 py-0.5 font-medium ring-1 ${badge.className}`}>{badge.text}</span>
+          <span className={`shrink-0 rounded-full px-2 py-0.5 font-medium ring-1 ${badge.className}`}>{badge.text}</span>
         )}
-        {lastUpdated && <span>Schedule updated: {lastUpdated}</span>}
+        {lastUpdated && <span className="min-w-0 truncate">Schedule updated: {lastUpdated}</span>}
       </div>
     </header>
   );
