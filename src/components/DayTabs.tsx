@@ -1,0 +1,52 @@
+import { useEffect, useRef } from 'react';
+import type { ProgramDay } from '../types';
+
+interface DayTabsProps {
+  days: ProgramDay[];
+  selected: string;
+  today: string;
+  onSelect: (dayId: string) => void;
+}
+
+export function DayTabs({ days, selected, today, onSelect }: DayTabsProps) {
+  const activeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+  }, [selected]);
+
+  return (
+    <nav
+      className="scrollbar-none sticky top-0 z-20 flex gap-1.5 overflow-x-auto border-b border-zinc-800 bg-zinc-950/95 px-3 py-2 backdrop-blur"
+      aria-label="Conference days"
+    >
+      {days.map((day) => {
+        const isActive = day.id === selected;
+        const isToday = day.date === today;
+        return (
+          <button
+            key={day.id}
+            ref={isActive ? activeRef : undefined}
+            onClick={() => onSelect(day.id)}
+            className={`relative flex min-w-[4.5rem] flex-col items-center rounded-xl px-3 py-1.5 text-sm transition active:scale-95 ${
+              isActive
+                ? 'bg-orange-500 font-semibold text-zinc-950'
+                : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:bg-zinc-800'
+            }`}
+          >
+            <span className="text-[11px] font-medium uppercase tracking-wide opacity-80">{day.weekday}</span>
+            <span className="text-base font-bold leading-tight">Oct {day.id}</span>
+            {isToday && (
+              <span
+                className={`absolute -top-0.5 right-1.5 h-1.5 w-1.5 rounded-full ${
+                  isActive ? 'bg-zinc-950' : 'bg-orange-400'
+                }`}
+                aria-label="Today"
+              />
+            )}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}

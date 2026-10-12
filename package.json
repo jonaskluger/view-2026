@@ -1,0 +1,33 @@
+{
+  "name": "view-2026-program",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Live program for VIEW Conference 2026 — fetches the official schedule and renders a mobile-friendly agenda.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "prebuild": "npm run snapshot || echo 'snapshot failed, using committed one'",
+    "preview": "vite preview",
+    "snapshot": "tsx scripts/snapshot.ts"
+  },
+  "dependencies": {
+    "node-html-parser": "^7.0.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vercel/node": "^5.3.24",
+    "@vitejs/plugin-react": "^5.0.3",
+    "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7"
+  }
+}
