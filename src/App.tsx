@@ -156,6 +156,7 @@ export default function App() {
                   key={session.id}
                   session={session}
                   live={isOngoing(session.start, session.end, now.hm, session.date, now.date)}
+                  past={session.date < now.date || (session.date === now.date && session.end <= now.hm)}
                   favorite={isFavorite(session.id)}
                   onToggleFavorite={() => toggleFavorite(session.id)}
                 />
