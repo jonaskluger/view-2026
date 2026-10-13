@@ -20,7 +20,7 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
 
   return (
     <nav
-      className="sticky top-0 z-20 flex gap-1.5 border-b border-zinc-800 bg-zinc-950/95 px-3 py-2 backdrop-blur"
+      className="scrollbar-none sticky top-0 z-20 flex justify-center-safe gap-1.5 overflow-x-auto border-b border-zinc-800 bg-zinc-950/95 px-3 py-2 backdrop-blur"
       aria-label="Conference days"
     >
       <button
@@ -38,8 +38,7 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
         </span>
       </button>
       <div className="w-px shrink-0 self-stretch bg-zinc-800" aria-hidden="true" />
-      <div className="scrollbar-none flex flex-1 gap-1.5 overflow-x-auto">
-        {days.map((day) => {
+      {days.map((day) => {
         const isActive = day.id === selected;
         const isToday = day.date === today;
         return (
@@ -47,7 +46,7 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
             key={day.id}
             ref={isActive ? activeRef : undefined}
             onClick={() => onSelect(day.id)}
-            className={`relative flex aspect-square min-w-[4.5rem] flex-col items-center justify-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
+            className={`relative flex aspect-square min-w-[4.5rem] shrink-0 flex-col items-center justify-center rounded-full px-3 py-1.5 text-sm transition active:scale-95 ${
               isActive
                 ? 'bg-view font-bold text-white shadow-md shadow-view/25'
                 : 'bg-zinc-900 text-zinc-300 ring-1 ring-zinc-800 hover:ring-view/50'
@@ -57,8 +56,7 @@ export function DayTabs({ days, selected, today, onSelect, favoritesCount, favor
             <span className="text-base font-extrabold leading-tight">Oct {day.id}</span>
           </button>
         );
-        })}
-      </div>
+      })}
     </nav>
   );
 }
